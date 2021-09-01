@@ -10,7 +10,10 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 var Program string
 var Author string
@@ -34,13 +37,29 @@ type Tree struct {
 	//Section []slice
 }
 
+func welcome(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "Welcome\n")
+}
+
+func headers(w http.ResponseWriter, req *http.Request) {
+	for name, headers := range req.Header {
+		for _, h := range headers {
+			fmt.Fprintf(w, "%v: %v\n", name, h)
+		}
+	}
+}
+
 func main() {
 	Program = "Sylvan"
 	Author = "David R. Larsen"
 	Version = "0.0.1"
 	Units = "centimeters"
 
-	fmt.Printf("%s by %s\n", Program, Author)
-	fmt.Printf("Version %s, Units %s\n", Version, Units)
+	//fmt.Printf("%s by %s, Version %s, Units %s\n", Program, Author, Version, Units)
+
+	http.HandleFunc("/hello", welcome)
+	http.HandleFunc("/headers", headers)
+
+	http.ListenAndServe(":8090", nil)
 
 }
