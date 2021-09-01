@@ -18,20 +18,19 @@ var Version string
 var Units string
 
 type Section struct {
-	Azi   float64
-	GR    float64
-	GHt   float64
-	BHRad float64
-	BHHt  float64
-	Tht   float64
+	Azi float64
+	GR  int64
+	BHR int64
+	BHt int64
+	Tht int64
 }
 
 type Tree struct {
-	Id   int64
-	X    float64
-	Y    float64
-	Elev float64
-	Spp  string
+	Id    int64
+	GX    int64
+	GY    int64
+	GElev int64
+	Spp   string
 	//Section []slice
 }
 
